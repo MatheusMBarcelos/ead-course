@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -75,8 +76,11 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec,
-                                                           @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC)
-                                                                   Pageable pageable) {
+                                                           @PageableDefault(sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
+                                                           @RequestParam(required = false) UUID userId) {
+        if (userId != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
