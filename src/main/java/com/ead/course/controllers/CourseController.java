@@ -87,6 +87,10 @@ public class CourseController {
                                                            @PageableDefault(sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
                                                            @RequestParam(required = false) UUID userId) {
 
+        if (userId != null) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
