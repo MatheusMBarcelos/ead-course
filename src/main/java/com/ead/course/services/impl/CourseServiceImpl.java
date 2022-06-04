@@ -44,6 +44,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public boolean existsByCourseAndUser(UUID courseId, UUID userId) {
+        return courseRepository.existsByCourseAndUser(courseId, userId);
+    }
+
+    @Override
+    @Transactional
+    public void saveSubscriptionUserInCourse(UUID courseId, UUID userId) {
+        courseRepository.saveCourseUser(courseId, userId);
+    }
+
+    @Override
     @Transactional
     public void delete(CourseModel courseModel) {
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
