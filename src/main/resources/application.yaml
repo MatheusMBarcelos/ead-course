@@ -23,6 +23,8 @@ spring:
   output:
     ansi:
       enabled: always
+  rabbitmq:
+    addresses: amqps://pyfxikhf:UKpmwpsZObUDfm8OnN39g3tVxc6PK87i@woodpecker.rmq.cloudamqp.com/pyfxikhf
 
 logging:
   level:
